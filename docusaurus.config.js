@@ -73,7 +73,7 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'js快捷方法',
+            label: 'Js快捷方法',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -94,7 +94,7 @@ const config = {
                 to: '/docs/intro',
               },
               {
-                label: 'js快捷方法',
+                label: 'Js快捷方法',
                 to: '/docs/intro',
               },
             ],
