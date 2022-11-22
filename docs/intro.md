@@ -2,46 +2,52 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# 规范说明
 
-Let's discover **Docusaurus in less than 5 minutes**.
+在日常开发中，任何能**提高代码可维护性**、**降低代码理解成本**、**提高代码的容错率**和**提高项目可扩展性**的统一标准，称之为**规范标准。**
 
-## Getting Started
 
-Get started by **creating a new site**.
+## 规范的好处
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+1. 代码的一致性
 
-### What you'll need
+2. 降低开发成本
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+3. 提升团队效率
 
-## Generate a new site
+4. 减少沟通成本
 
-Generate a new Docusaurus site using the **classic template**.
+5. 有助于自身成长
 
-The classic template will automatically be added to your project after you run the command:
+6. 提高团队和谐（Code Review）
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+7. 养成编写代码规范的习惯，有助于程序员自身的成长
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
 
-## Start your site
+### 前端规范包含哪些方面
 
-Run the development server:
+1. 前端命名规范
 
-```bash
-cd my-website
-npm run start
-```
+2. 技术栈规范
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+3. 编程规范
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+4. Git规范
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+5. BFF研发规范
+
+6. 前后端协作规范
+
+7. UI设计规范
+
+8. 前端测试规范
+
+9. 浏览器兼容规范
+
+10. IED编辑器规范
+
+11. 需求研发流程规范
+
+12. CR规范（Code Review）
+
