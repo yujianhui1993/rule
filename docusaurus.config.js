@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'My World',
-  tagline: '规范文档及快捷方法',
+  tagline: '规范文档',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/rule',
   onBrokenLinks: 'throw',
@@ -67,15 +67,15 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: '前端规范',
+            label: '前端Doc',
           },
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Js快捷方法',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          // {
+          //   type: 'doc',
+          //   docId: 'intro',
+          //   position: 'left',
+          //   label: 'Js快捷方法',
+          // },
+          // {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/yujianhui1993',
             label: 'GitHub',
@@ -90,13 +90,13 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: '前端规范',
+                label: '前端Doc',
                 to: '/docs/intro',
               },
-              {
-                label: 'Js快捷方法',
-                to: '/docs/intro',
-              },
+              // {
+              //   label: 'Js快捷方法',
+              //   to: '/docs/category',
+              // },
             ],
           },
           {
@@ -111,13 +111,13 @@ const config = {
           {
             title: 'More',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
+              // {
+              //   label: 'Blog',
+              //   to: '/blog',
+              // },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/yujianhui1993',
               },
             ],
           },
