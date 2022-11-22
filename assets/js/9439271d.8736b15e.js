@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyjh_rule=self.webpackChunkyjh_rule||[]).push([[4553],{7125:l=>{l.exports=JSON.parse('{"label":"hola","permalink":"/rule/blog/tags/hola","allTagsPath":"/rule/blog/tags","count":1}')}}]);
