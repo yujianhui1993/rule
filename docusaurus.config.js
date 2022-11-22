@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'My World',
   tagline: '规范文档及快捷方法',
-  url: 'https://github.com/yujianhui1993',
+  url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/rule',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
