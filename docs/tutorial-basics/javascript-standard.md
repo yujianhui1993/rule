@@ -109,4 +109,358 @@ sidebar_position: 2
 
  
 
- ## [vue 规则](https://v2.cn.vuejs.org/v2/style-guide/) 以官方文档为基础
+ ## [vue 规则](https://v2.cn.vuejs.org/v2/style-guide/) 以官方文档
+
+ 
+ ### Prop 定义必要
+
+  > Prop 定义应该尽量详细。
+  >在你提交的代码中，prop 的定义应该尽量详细，至少需要指定其类型。
+
+ #### 反例
+      // 这样做只有开发原型系统时可以接受
+      props: ['status']
+  #### 正例
+      props: {
+        status: String
+      }
+      // 更好的做法！
+      props: {
+        status: {
+          type: String,
+          required: true,
+          validator: function (value) {
+            return [
+              'syncing',
+              'synced',
+              'version-conflict',
+              'error'
+            ].indexOf(value) !== -1
+          }
+        }
+      }
+### 为 v-for 设置键值必要
+
+>总是用 key 配合 v-for。
+>在组件上总是必须用 key 配合 v-for，以便维护内部组件及其子树的状态。甚至在元素上维护可预测的行为，比如动画中的对象固化 (object constancy)，也是一种好的做法。
+
+#### 反例
+
+      <ul>
+        <li v-for="todo in todos">
+          {{ todo.text }}
+        </li>
+      </ul>
+#### 正例
+
+      <ul>
+        <li
+          v-for="todo in todos"
+          :key="todo.id"
+        >
+          {{ todo.text }}
+        </li>
+      </ul>
+
+### 避免 v-if 和 v-for 用在一起必要
+  
+#### 永远不要把 v-if 和 v-for 同时用在同一个元素上。
+
+一般我们在两种常见的情况下会倾向于这样做：
+
+- 为了过滤一个列表中的项目 (比如 v-for="user in users" v-if="user.isActive")。在这种情形下，请将 users 替换为一个计算属性 (比如 activeUsers)，让其返回过滤后的列表。
+
+- 为了避免渲染本应该被隐藏的列表 (比如 v-for="user in users" v-if="shouldShowUsers")。这种情形下，请将 v-if 移动至容器元素上 (比如 ul、ol)。
+
+#### 反例
+      <ul>
+        <li
+          v-for="user in users"
+          v-if="user.isActive"
+          :key="user.id"
+        >
+          {{ user.name }}
+        </li>
+      </ul>
+      <ul>
+        <li
+          v-for="user in users"
+          v-if="shouldShowUsers"
+          :key="user.id"
+        >
+          {{ user.name }}
+        </li>
+      </ul>
+#### 正例
+
+      <ul>
+        <li
+          v-for="user in activeUsers"
+          :key="user.id"
+        >
+          {{ user.name }}
+        </li>
+      </ul>
+      <ul v-if="shouldShowUsers">
+        <li
+          v-for="user in users"
+          :key="user.id"
+        >
+          {{ user.name }}
+        </li>
+      </ul>
+
+
+### 为组件样式设置作用域
+
+#### 对于应用来说，顶级 App 组件和布局组件中的样式可以是全局的，但是其它所有组件都应该是有作用域的。
+
+这条规则只和单文件组件有关。你不一定要使用 scoped attribute。设置作用域也可以通过 CSS Modules，那是一个基于 class 的类似 BEM 的策略，当然你也可以使用其它的库或约定。
+
+不管怎样，对于组件库，我们应该更倾向于选用基于 class 的策略而不是 scoped attribute。
+
+这让覆写内部样式更容易：使用了常人可理解的 class 名称且没有太高的选择器优先级，而且不太会导致冲突。
+
+#### 反例
+      <template>
+        <button class="btn btn-close">X</button>
+      </template>
+
+      <style>
+      .btn-close {
+        background-color: red;
+      }
+      </style>
+#### 正例
+
+##### 使用 `scoped` attribute
+
+```
+
+  <template>
+    <button class="button button-close">X</button>
+  </template>
+
+  <style scoped>
+  .button {
+    border: none;
+    border-radius: 2px;
+  }
+
+  .button-close {
+    background-color: red;
+  }
+  </style>
+
+```
+##### 使用 CSS Modules
+
+```
+
+<template>
+  <button :class="[$style.button, $style.buttonClose]">X</button>
+</template>
+
+<style module>
+.button {
+  border: none;
+  border-radius: 2px;
+}
+
+.buttonClose {
+  background-color: red;
+}
+</style>
+
+```
+
+#####  使用 BEM 约定
+
+``` 
+<template>
+  <button class="c-Button c-Button--close">X</button>
+</template>
+
+<style>
+.c-Button {
+  border: none;
+  border-radius: 2px;
+}
+
+.c-Button--close {
+  background-color: red;
+}
+</style>
+
+```
+
+
+### 组件文件强烈推荐
+#### 只要有能够拼接文件的构建系统，就把每个组件单独分成文件。
+
+当你需要编辑一个组件或查阅一个组件的用法时，可以更快速的找到它。
+
+#### 反例
+
+      Vue.component('TodoList', {
+        // ...
+      })
+
+      Vue.component('TodoItem', {
+        // ...
+      })
+#### 正例
+
+      components/
+      |- TodoList.js
+      |- TodoItem.js
+      components/
+      |- TodoList.vue
+      |- TodoItem.vue
+
+### 单文件组件文件名的大小写
+
+#### 单文件组件的文件名应该要么始终是单词大写开头 (PascalCase)，要么始终是横线连接 (kebab-case)。
+
+>单词大写开头对于代码编辑器的自动补全最为友好，因为这使得我们在 JS(X) 和模板中引用组件的方式尽可能的一致。然而，混用文件命名方式有的时候会导致大小写不敏感的文件系统的问题，这也是横线连接命名同样完全可取的原因。
+
+#### 反例
+      components/
+      |- mycomponent.vue
+      components/
+      |- myComponent.vue
+
+#### 正例
+      components/
+      |- MyComponent.vue
+      components/
+      |- my-component.vue
+
+
+### 基础组件名
+
+#### 应用特定样式和约定的基础组件 (也就是展示类的、无逻辑的或无状态的组件) 应该全部以一个特定的前缀开头，比如 Base、App 或 V。
+
+#### 反例
+      components/
+      |- MyButton.vue
+      |- VueTable.vue
+      |- Icon.vue
+
+#### 正例
+
+      components/
+      |- BaseButton.vue
+      |- BaseTable.vue
+      |- BaseIcon.vue
+      components/
+      |- AppButton.vue
+      |- AppTable.vue
+      |- AppIcon.vue
+      components/
+      |- VButton.vue
+      |- VTable.vue
+      |- VIcon.vue
+
+#### 单例组件名
+
+##### 只应该拥有单个活跃实例的组件应该以 The 前缀命名，以示其唯一性。
+
+>这不意味着组件只可用于一个单页面，而是每个页面只使用一次。这些组件永远不接受任何 prop，因为它们是为你的应用定制的，而不是它们在你的应用中的上下文。如果你发现有必要添加 prop，那就表明这实际上是一个可复用的组件，只是目前在每个页面里只使用一次。
+
+#### 反例
+
+      components/
+      |- Heading.vue
+      |- MySidebar.vue
+
+#### 正例
+
+      components/
+      |- TheHeading.vue
+      |- TheSidebar.vue
+
+
+### 紧密耦合的组件名
+
+#### 和父组件紧密耦合的子组件应该以父组件名作为前缀命名。
+
+>如果一个组件只在某个父组件的场景下有意义，这层关系应该体现在其名字上。因为编辑器通常会按字母顺序组织文件，所以这样做可以把相关联的文件排在一起。
+
+#### 反例
+
+      components/
+      |- TodoList.vue
+      |- TodoItem.vue
+      |- TodoButton.vue
+      components/
+      |- SearchSidebar.vue
+      |- NavigationForSearchSidebar.vue
+#### 正例
+
+      components/
+      |- TodoList.vue
+      |- TodoListItem.vue
+      |- TodoListItemButton.vue
+      components/
+      |- SearchSidebar.vue
+      |- SearchSidebarNavigation.vue
+
+### 组件名中的单词顺序
+
+#### 组件名应该以高级别的 (通常是一般化描述的) 单词开头，以描述性的修饰词结尾。
+
+#### 反例
+      components/
+      |- ClearSearchButton.vue
+      |- ExcludeFromSearchInput.vue
+      |- LaunchOnStartupCheckbox.vue
+      |- RunSearchButton.vue
+      |- SearchInput.vue
+      |- TermsCheckbox.vue
+#### 正例
+
+      components/
+      |- SearchButtonClear.vue
+      |- SearchButtonRun.vue
+      |- SearchInputQuery.vue
+      |- SearchInputExcludeGlob.vue
+      |- SettingsCheckboxTerms.vue
+      |- SettingsCheckboxLaunchOnStartup.vue
+
+
+### 完整单词的组件名强烈推荐
+
+#### 组件名应该倾向于完整单词而不是缩写。
+
+>编辑器中的自动补全已经让书写长命名的代价非常之低了，而其带来的明确性却是非常宝贵的。不常用的缩写尤其应该避免。
+
+#### 反例
+      components/
+      |- SdSettings.vue
+      |- UProfOpts.vue
+#### 正例
+
+      components/
+      |- StudentDashboardSettings.vue
+      |- UserProfileOptions.vue
+
+
+### Prop 名大小写
+
+#### 在声明 prop 的时候，其命名应该始终使用 camelCase，而在模板和 JSX 中应该始终使用 kebab-case。
+
+>我们单纯的遵循每个语言的约定。在 JavaScript 中更自然的是 camelCase。而在 HTML 中则是 kebab-case。
+
+#### 反例
+
+      props: {
+        'greeting-text': String
+      }
+      <WelcomeMessage greetingText="hi"/>
+#### 正例
+
+      props: {
+        greetingText: String
+      }
+      <WelcomeMessage greeting-text="hi"/>
