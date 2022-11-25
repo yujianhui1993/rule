@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 # Javascript 规范
@@ -109,7 +109,7 @@ sidebar_position: 2
 
  
 
- ## [vue 规则](https://v2.cn.vuejs.org/v2/style-guide/) 以官方文档
+ ## [vue 规则](https://v2.cn.vuejs.org/v2/style-guide/) 官方规范文档
 
  
  ### Prop 定义必要
